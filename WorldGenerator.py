@@ -50,15 +50,9 @@ class Board:
             print(i, end='\t')
         print()
 
-        # TODO Update printing method for a prettier board method, current method will only be pretty for up to 3
-        #   digit long values
-        #   Formula is something like, need a tab after the first 2 digits, then another every 3 digits, or something
-        #   similar but reversed where max len needs 1 tab, then a value that is 2 digits shorter than max len needs 2
-        #   and every 3 digits shorter from there needs an additional tab, ideally precompute this amount?
-        #   This seems to not work quite correctly, maybe it should be instead 1 + len(value) which gives the raw len
-        #   of the top, then divide by 3 and round up for the max number of tabs assuming no characters
-        #   Then subtract 1 tab for every 3 chars in the row to get the real number of tabs that need to be placed?
-        #   Maybe just get over using tabs and just use spaces
+        # TODO Update printing method for a prettier board method, current method relies on monospaced terminal output
+        #   for the board to look nice.  Ideally each cell would be tab separated, but to generate a more visual board
+        #   using tkinter or pygame, the visual board is enough and this method can eventually be ignored
 
         for i in range(self.size):
             print("\t", "-" * self.size * 4)    # Horizontal demarcation
@@ -67,16 +61,6 @@ class Board:
             # Print the operation and tile value
             for j in range(self.size):
                 charDiff = self.maxWidth - len(str(self.visualBoard[i][j].value))
-                #tabCount = 1
-
-                #if charDiff > 1:
-                #    tabCount += 1
-
-                #charDiff -= 2
-                #while charDiff > 0:
-                #    charDiff -= 3
-                #    tabCount += 1
-
                 end = " " * charDiff + "|"
                 print(str(self.visualBoard[i][j].operation) + str(self.visualBoard[i][j].value), end=end)
             print()
@@ -84,8 +68,6 @@ class Board:
             # Print the order and user value
             print("", end="\t|")
             for j in range(self.size):
-                # TODO This is not good, look at above formula essentially?
-
                 if self.userBoard[i][j] != 0:
                     end = " " * (self.maxWidth - len(str(self.userBoard[i][j]))) + "|"
                     print(str(self.visualBoard[i][j].order) + str(self.userBoard[i][j]), end=end)

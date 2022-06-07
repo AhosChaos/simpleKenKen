@@ -26,19 +26,13 @@ if __name__ == "__main__":
         board.printBoard()
 
         while not checkCompletion(board.solution, board.userBoard):
-            userVal = -1
-            userXVal = -1
-            userYVal = -1
+            userXVal = queryIntInput("x coordinate", (0, board.dim), "Enter a value for the x coordinate:")
+            userYVal = queryIntInput("y coordinate", (0, board.dim), "Enter a value for the y coordinate:")
+            userVal = queryIntInput("value", (1, board.size), "Enter a to place at the coordinate:")
 
-            userXVal = queryIntInput("x coordinate", (0,board.dim), "Enter a value for the x coordinate:")
-            userYVal = queryIntInput("y coordinate", (0,board.dim), "Enter a value for the y coordinate:")
-            userVal = queryIntInput("value", (1,board.size), "Enter a to place at the coordinate:")
-
-
-
-            print(board.userBoard)
             board.userBoard[userYVal][userXVal] = userVal
             board.printBoard()
+
         print("PUZZLE COMPLETE!")
 
     parser = argparse.ArgumentParser()
