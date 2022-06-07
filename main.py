@@ -18,6 +18,8 @@ def queryIntInput(varName: str, varRange: (int, int), inputMsg: str) -> int:
 
 
 if __name__ == "__main__":
+    # TODO Change this to be a more comprehensive completion check ie check the that all of the tile constraints are met
+    #   Move this function into world gen since it will be used to validate a newly created board is unique
     def checkCompletion(solution, progress):
         return all(solution[i][j] == progress[i][j] for i in range(len(solution)) for j in range(len(solution)))
 
