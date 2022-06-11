@@ -4,6 +4,7 @@
 
 import argparse
 import WorldGenerator
+import AISolver
 
 def queryIntInput(varName: str, varRange: (int, int), inputMsg: str) -> int:
     while True:
@@ -20,14 +21,15 @@ def queryIntInput(varName: str, varRange: (int, int), inputMsg: str) -> int:
 if __name__ == "__main__":
     # TODO Change this to be a more comprehensive completion check ie check the that all of the tile constraints are met
     #   Move this function into world gen since it will be used to validate a newly created board is unique
-    def checkCompletion(solution, progress):
-        return all(solution[i][j] == progress[i][j] for i in range(len(solution)) for j in range(len(solution)))
+    def checkCompletion(tiles, progress):
+        #return all(solution[i][j] == progress[i][j] for i in range(len(solution)) for j in range(len(solution)))
 
+        return AISolver.verifySolution(tiles, progress)
 
     def runManual(board):
         board.printBoard()
 
-        while not checkCompletion(board.solution, board.userBoard):
+        while not checkCompletion(board.tiles, board.userBoard):
             userXVal = queryIntInput("x coordinate", (0, board.dim), "Enter a value for the x coordinate:")
             userYVal = queryIntInput("y coordinate", (0, board.dim), "Enter a value for the y coordinate:")
             userVal = queryIntInput("value", (1, board.size), "Enter a to place at the coordinate:")
