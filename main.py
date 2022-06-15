@@ -54,8 +54,8 @@ if __name__ == "__main__":
     if args.manual is True:
         runManual(board)
     elif args.automatic is True:
-        #runAuto()
-        pass
+        print("Starting AI")
+        AISolver.AISolver(board).solve()
     else:
         #runDebug()
         pass

@@ -7,7 +7,7 @@ from GameBase import Tile
 import random
 import AISolver
 
-
+random.seed(107)
 
 PREDEFINED = Board({Tile({(0, 0), (0, 1)}, "+", 4),
                     Tile({(0, 2), (1, 2)}, "+", 3),
@@ -23,6 +23,7 @@ PREDEFINED = Board({Tile({(0, 0), (0, 1)}, "+", 4),
                     [2, 3, 4, 1],
                     [1, 4, 3, 2]])
 
+DEBUG = False
 
 def genWorld(new: str, size: int) -> Board:
     if new == "True":
@@ -98,7 +99,7 @@ def genWorld(new: str, size: int) -> Board:
                     if boardValStart % boardValNext == 0:
                         value = int(boardValStart / boardValNext)
                     elif boardValNext % boardValStart == 0:
-                        value = int(boardValNext % boardValStart)
+                        value = int(boardValNext / boardValStart)
                     else:
                         operation = random.choice(["+", "-", "*"])
 
@@ -117,9 +118,16 @@ def genWorld(new: str, size: int) -> Board:
         # Probably just use the AI and see what solutions the AI gives, if the AI gives more than one, then repeat
         #   If only 1 solution, then return this board
         retBoard = Board(boardTileSet, board)
-        if len(AISolver.AISolver(retBoard)) > 1:
-            print("Non unique solution")
+        if len(AISolver.AISolver(retBoard).solve()) > 1:
+            if DEBUG: print("Non unique solution")
+            if DEBUG: print("Generating a new world")
+
+            return genWorld(new, size)
         else:
+            # Flush out the userboard that the AI solver may have touched
+            for i in range(retBoard.size):
+                for j in range(retBoard.size):
+                    retBoard.userBoard[i][j] = 0
             return retBoard
 
     else:
